@@ -1,24 +1,17 @@
-package com.oldlane.cheeseblog.commons.entity;
+package com.oldlane.cheeseblog.xo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
- * 
- * @TableName article
+ * @author: oldlane
+ * @date: 2022/11/2 19:38
  */
-@TableName(value ="article")
 @Data
-public class Article implements Serializable {
-    /**
-     * 主键
-     */
-    @TableId
+public class ArticleVO {
+
     private Long id;
 
     /**
@@ -82,16 +75,6 @@ public class Article implements Serializable {
     private Integer audit;
 
     /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
      * 发布时间
      */
     private Date publishTime;
@@ -116,6 +99,14 @@ public class Article implements Serializable {
      */
     private Integer source;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    /**
+     * 标签id
+     */
+    private List<Long> tagIdList;
+
+    /**
+     * 分类id
+     */
+    private Long categoryId;
+
 }

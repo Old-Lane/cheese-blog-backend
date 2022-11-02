@@ -16,6 +16,8 @@
         <module>cheese_utils</module>
         <module>cheese_base</module>
         <module>cheese_security</module>
+        <module>cheese_admin</module>
+        <module>cheese_creator</module>
     </modules>
 
     <properties>
@@ -32,6 +34,7 @@
         <druid.version>1.2.14</druid.version>
         <spring-cloud-loadbalancer.version>3.0.2</spring-cloud-loadbalancer.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <junit.version>4.13.2</junit.version>
     </properties>
     <dependencyManagement>
         <dependencies>

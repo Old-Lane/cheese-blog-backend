@@ -1,4 +1,4 @@
-package com.oldlane.cheeseblog.web.config;
+package com.oldlane.cheeseblog.creator.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

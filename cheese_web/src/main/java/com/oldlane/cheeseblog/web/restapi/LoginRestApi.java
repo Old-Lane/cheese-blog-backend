@@ -10,6 +10,7 @@ import com.oldlane.cheeseblog.base.result.Result;
 import com.oldlane.cheeseblog.commons.entity.Role;
 import com.oldlane.cheeseblog.commons.entity.UserRole;
 import com.oldlane.cheeseblog.commons.entity.Users;
+import com.oldlane.cheeseblog.utils.JwtUtil;
 import com.oldlane.cheeseblog.utils.RegexUtils;
 import com.oldlane.cheeseblog.xo.holder.UserHolder;
 import com.oldlane.cheeseblog.xo.service.MailService;
@@ -18,6 +19,7 @@ import com.oldlane.cheeseblog.xo.service.UserRoleService;
 import com.oldlane.cheeseblog.xo.service.UsersService;
 import com.oldlane.cheeseblog.xo.vo.LoginFormVO;
 import com.oldlane.cheeseblog.xo.vo.UserVO;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -41,6 +43,7 @@ import static com.oldlane.cheeseblog.base.global.SystemConstants.*;
 @RestController
 @Slf4j
 @Api(tags = "登录接口")
+@RequestMapping("/login")
 public class LoginRestApi {
 
     @Autowired
@@ -99,18 +102,24 @@ public class LoginRestApi {
             }
         }
 
-        String token = UUID.randomUUID().toString(true);
-        UserVO userDTO = BeanUtil.copyProperties(user, UserVO.class);
+
+
+
+        String subject = UUID.randomUUID().toString(true);
+        String token = JwtUtil.createJWT(subject, user.getId(), true, null);
+
+        UserVO userVO = BeanUtil.copyProperties(user, UserVO.class);
         String role = getRoleByUserId(user.getId());
-        userDTO.setRole(role);
+        userVO.setRole(role);
         //转为map存储
-        Map<String, Object> userMap = BeanUtil.beanToMap(userDTO, new HashMap<>(), CopyOptions.create().ignoreNullValue().setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));
+        Map<String, Object> userMap = BeanUtil.beanToMap(userVO, new HashMap<>(), CopyOptions.create().ignoreNullValue().setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));
 
         log.info("userMap: {}", userMap);
         //存入redis
-        stringRedisTemplate.opsForHash().putAll(LOGIN_USER_TOKEN + token, userMap);
+        stringRedisTemplate.opsForHash().putAll(LOGIN_USER_TOKEN + subject, userMap);
         //设置过期时间
-        stringRedisTemplate.expire(LOGIN_USER_TOKEN + token, LOGIN_TOKEN_TTL, TimeUnit.MINUTES);
+        stringRedisTemplate.expire(LOGIN_USER_TOKEN + subject, LOGIN_TOKEN_TTL, TimeUnit.MINUTES);
+        log.info("token: {}", token);
 
         return Result.ok(token);
     }
@@ -136,8 +145,10 @@ public class LoginRestApi {
     @PostMapping("/logout")
     public Result logout(@ApiParam(name = "token", value = "token令牌", required = false) @RequestHeader("Authorization") String token) {
         log.info("logout:token => {}", token);
-        stringRedisTemplate.delete(LOGIN_USER_TOKEN + token);
-        UserHolder.removeUser();
+        Claims claims = JwtUtil.parseJWT(token);
+        assert claims != null;
+        String subject = claims.get("user_open_id", String.class);
+        stringRedisTemplate.delete(LOGIN_USER_TOKEN + subject);
         return Result.ok().message("退出成功");
     }
 
