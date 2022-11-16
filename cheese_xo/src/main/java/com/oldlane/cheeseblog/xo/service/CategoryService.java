@@ -1,6 +1,7 @@
 package com.oldlane.cheeseblog.xo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.oldlane.cheeseblog.base.result.Result;
 import com.oldlane.cheeseblog.commons.entity.Category;
 
 /**
@@ -10,4 +11,5 @@ import com.oldlane.cheeseblog.commons.entity.Category;
 */
 public interface CategoryService extends IService<Category> {
 
+    Result getCategory(Long userId);
 }

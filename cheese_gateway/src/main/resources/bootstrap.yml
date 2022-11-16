@@ -57,3 +57,10 @@ spring:
             - Path=/cheese-creator/**
           filters:
             - StripPrefix=1
+
+        - id: cheese_upload
+          uri: lb://cheese-upload
+          predicates:
+            - Path=/cheese-upload/**
+          filters:
+            - StripPrefix=1

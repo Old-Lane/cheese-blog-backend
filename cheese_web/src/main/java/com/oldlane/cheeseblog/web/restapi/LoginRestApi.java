@@ -102,9 +102,6 @@ public class LoginRestApi {
             }
         }
 
-
-
-
         String subject = UUID.randomUUID().toString(true);
         String token = JwtUtil.createJWT(subject, user.getId(), true, null);
 
@@ -120,8 +117,11 @@ public class LoginRestApi {
         //设置过期时间
         stringRedisTemplate.expire(LOGIN_USER_TOKEN + subject, LOGIN_TOKEN_TTL, TimeUnit.MINUTES);
         log.info("token: {}", token);
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("token", token);
+        resultMap.put("userInfo", userVO);
 
-        return Result.ok(token);
+        return Result.ok(resultMap);
     }
 
     @ApiOperation("发送验证码")

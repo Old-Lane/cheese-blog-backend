@@ -1,0 +1,14 @@
+server:
+  port: 8003
+spring:
+  application:
+    name: cheese-upload
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        namespace: 67d3de84-1a7a-400a-af6e-26926ff38188
+        group: dev

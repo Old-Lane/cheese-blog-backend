@@ -18,7 +18,8 @@ public class JacksonConfig {
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        Jackson2ObjectMapperBuilderCustomizer cunstomizer = jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.serializerByType(Long.TYPE, ToStringSerializer.instance);
-        return cunstomizer;
+        return builder -> {
+            builder.serializerByType(Long.class, ToStringSerializer.instance);
+        };
     }
 }

@@ -22,6 +22,11 @@ public class Category implements Serializable {
     private Long id;
 
     /**
+     * 用户id
+     */
+    private Long userId;
+
+    /**
      * 分类名
      */
     private String name;

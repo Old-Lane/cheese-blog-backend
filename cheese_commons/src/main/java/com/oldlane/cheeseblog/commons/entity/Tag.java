@@ -3,6 +3,8 @@ package com.oldlane.cheeseblog.commons.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,6 +21,7 @@ public class Tag implements Serializable {
      * 主键
      */
     @TableId
+//    @JsonSerialize(using= ToStringSerializer.class)
     private Long id;
 
     /**

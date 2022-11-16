@@ -27,7 +27,7 @@ public class ArticleRestApi {
     public Result draft(@RequestParam String content) {
         Article article = new Article();
         article.setContent(content);
-        article.setState(0);
+        article.setStatus(0);
         articleService.save(article);
         return Result.ok().message("成功保存至草稿箱");
     }

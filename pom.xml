@@ -18,6 +18,7 @@
         <module>cheese_security</module>
         <module>cheese_admin</module>
         <module>cheese_creator</module>
+        <module>cheese_upload</module>
     </modules>
 
     <properties>

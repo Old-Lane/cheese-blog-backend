@@ -49,6 +49,7 @@ public class IndexRestApi {
         navVO.setIsLogin(true);
         navVO.setNickname(user.getNickname());
         navVO.setAvatar(user.getAvatar());
+        navVO.setUid(user.getId());
         return Result.ok(navVO);
     }
 }

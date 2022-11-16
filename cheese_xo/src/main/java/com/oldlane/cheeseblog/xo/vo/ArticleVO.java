@@ -82,7 +82,7 @@ public class ArticleVO {
     /**
      * 文章状态 0-草稿箱 1-回收站
      */
-    private Integer state;
+    private Integer status;
 
     /**
      * 作者
@@ -100,13 +100,23 @@ public class ArticleVO {
     private Integer source;
 
     /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+
+    /**
      * 标签id
      */
     private List<Long> tagIdList;
 
     /**
-     * 分类id
+     * 分类名
      */
-    private Long categoryId;
+    private String categoryName;
 
 }

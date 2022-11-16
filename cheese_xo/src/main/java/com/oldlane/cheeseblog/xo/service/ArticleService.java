@@ -1,6 +1,7 @@
 package com.oldlane.cheeseblog.xo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.oldlane.cheeseblog.base.result.Result;
 import com.oldlane.cheeseblog.commons.entity.Article;
 
 /**
@@ -10,4 +11,7 @@ import com.oldlane.cheeseblog.commons.entity.Article;
 */
 public interface ArticleService extends IService<Article> {
 
+    Result getArticleList(String type, Integer pageSize, Integer pageNum);
+
+    Result getArticleById(Long id);
 }

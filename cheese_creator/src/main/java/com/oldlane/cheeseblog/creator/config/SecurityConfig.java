@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -21,10 +22,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationTokenFilter authenticationTokenFilter;
 
+    @Autowired
+    private MyAccessDeniedHandler deniedHandler;
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         //原因是因为springSecurity使用X-Frame-Options防止网页被Frame。所以需要关闭为了让后端的接口管理的swagger页面正常显示
         httpSecurity.headers().frameOptions().disable();
+        httpSecurity.exceptionHandling().accessDeniedHandler(deniedHandler);
 
         httpSecurity
                 // 由于使用的是JWT，我们这里不需要csrf
@@ -49,12 +54,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 对于获取token的rest api要允许匿名访问
                 .antMatchers("/index/**",
                         "/login/**",
-                        "/code/**",
-                        "/content/**"
+                        "/code/**"
                 ).permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
         //加前置过滤器 禁用缓存
         httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class).headers().cacheControl();
+
+
     }
 }

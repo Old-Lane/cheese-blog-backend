@@ -99,7 +99,7 @@ public class Article implements Serializable {
     /**
      * 文章状态 0-草稿箱 1-回收站
      */
-    private Integer state;
+    private Integer status;
 
     /**
      * 作者
@@ -115,6 +115,11 @@ public class Article implements Serializable {
      * 文章来源 0-原创 1-转载
      */
     private Integer source;
+
+    /**
+     * 文章分类id
+     */
+    private Long categoryId;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
