@@ -121,6 +121,12 @@ public class Article implements Serializable {
      */
     private Long categoryId;
 
+    /**
+     * 是否点赞
+     */
+    @TableField(exist = false)
+    private Boolean isLiked;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

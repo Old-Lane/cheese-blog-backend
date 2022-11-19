@@ -14,4 +14,8 @@ public interface ArticleService extends IService<Article> {
     Result getArticleList(String type, Integer pageSize, Integer pageNum);
 
     Result getArticleById(Long id);
+
+    Result listAll(String sort, Long uid, Integer page, Integer pageSize);
+
+    Result parseArticleByAid(Long aid);
 }

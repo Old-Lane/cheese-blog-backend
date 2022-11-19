@@ -47,6 +47,7 @@ public class ArticleRestApi {
 
     /**
      * 保存文章
+     *
      * @param articleVO
      * @return
      */
@@ -82,16 +83,14 @@ public class ArticleRestApi {
         }
         articleService.saveOrUpdate(article);
 
-        log.info("articleId ====> {}" ,article.getId());
+        log.info("articleId ====> {}", article.getId());
 
         //保存标签信息
         List<Long> tagList = articleVO.getTagIdList();
         if (tagList != null) {
-            for (Long id : tagList) {
-                LambdaQueryWrapper<ArticleTag> removeQueryWrapper = new LambdaQueryWrapper<>();
-                removeQueryWrapper.eq(ArticleTag::getTagId, id);
-                articleTagService.remove(removeQueryWrapper);
-            }
+            LambdaQueryWrapper<ArticleTag> removeQueryWrapper = new LambdaQueryWrapper<>();
+            removeQueryWrapper.eq(ArticleTag::getArticleId, articleVO.getId());
+            articleTagService.remove(removeQueryWrapper);
             for (Long tagId : tagList) {
                 ArticleTag articleTag = new ArticleTag();
                 articleTag.setArticleId(article.getId());

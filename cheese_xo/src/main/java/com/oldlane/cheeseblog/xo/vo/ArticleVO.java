@@ -119,4 +119,9 @@ public class ArticleVO {
      */
     private String categoryName;
 
+    /**
+     * 是否点赞
+     */
+    private Boolean isLiked;
+
 }

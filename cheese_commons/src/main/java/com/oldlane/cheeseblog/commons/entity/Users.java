@@ -55,6 +55,11 @@ public class Users implements Serializable {
     private String avatar;
 
     /**
+     * 个人简介
+     */
+    private String profile;
+
+    /**
      * 创建时间
      */
     private Date createTime;

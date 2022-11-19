@@ -5,6 +5,7 @@ package com.oldlane.cheeseblog.base.result;
  * Description:
  */
 
+import com.oldlane.cheeseblog.base.global.ECode;
 import lombok.Data;
 
 /**
@@ -42,7 +43,7 @@ public class Result<T> {
      * @return
      */
     public static<T> Result<T> ok(T data){
-        return build(data,200,"成功");
+        return build(data, ECode.SUCCESS,"操作成功");
     }
 
     public static<T> Result<T> fail(){
@@ -56,7 +57,7 @@ public class Result<T> {
      * @return
      */
     public static<T> Result<T> fail(T data){
-        return build(data, 201,"失败");
+        return build(data, ECode.ERROR,"操作失败");
     }
 
     public Result<T> message(String msg){
