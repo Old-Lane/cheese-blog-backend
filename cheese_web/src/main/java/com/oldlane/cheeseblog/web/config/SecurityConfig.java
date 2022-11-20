@@ -52,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/code/**",
                         "/article/**",
                         "/comment/list",
-                        "/user/card"
+                        "/user/card",
+                        "/follow/list/**"
                 ).permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();

@@ -32,4 +32,6 @@ public class BaseMessageConf {
     public static final String HAS_NOT_FOLLOWED = "你还未关注该用户";
     public static final String FOLLOW_SUCCESS = "关注成功";
     public static final String UNFOLLOW_SUCCESS = "取关成功";
+    public static final String NO_FRIEND = "你还没有关注的人";
+    public static final String NO_FANS = "你还没有粉丝";
 }

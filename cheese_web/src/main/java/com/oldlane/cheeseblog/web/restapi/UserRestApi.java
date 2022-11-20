@@ -100,7 +100,7 @@ public class UserRestApi {
             followQueryWrapper.eq(Follow::getFansId, me.getId());
             List<Follow> followList = followService.list(followQueryWrapper);
             result.put("isFollowed", false);
-            if (followList != null) {
+            if (followList.size() != 0) {
                 for (Follow follow : followList) {
                     if (Objects.equals(follow.getUserId(), id)) {
                         result.put("isFollowed", true);
@@ -110,53 +110,5 @@ public class UserRestApi {
             }
         }
         return Result.ok(result);
-    }
-
-    @ApiOperation(value = "关注用户", notes = "关注用户")
-    @PostMapping("follow")
-    public Result followUser(@ApiParam(name = "被关注用户id", value = "id") @RequestParam(name = "id") Long id) {
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
-            return Result.fail().code(ECode.ERROR).message(BaseMessageConf.SYS_LOGIN_ERROR);
-        }
-        UserVO user = (UserVO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        LambdaQueryWrapper<Follow> followLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        followLambdaQueryWrapper.eq(Follow::getFansId, user.getId());
-        List<Follow> followList = followService.list(followLambdaQueryWrapper);
-        if (followList != null) {
-            for (Follow follow : followList) {
-                if (Objects.equals(follow.getUserId(), id)) {
-                    return Result.fail().code(ECode.ERROR).message(BaseMessageConf.HAS_FOLLOWED);
-                }
-            }
-        }
-        Follow follow = new Follow();
-        follow.setUserId(id);
-        follow.setFansId(user.getId());
-        followService.save(follow);
-        return Result.ok().code(ECode.SUCCESS).message(BaseMessageConf.FOLLOW_SUCCESS);
-    }
-
-    @ApiOperation(value = "取关用户", notes = "取关用户")
-    @DeleteMapping("unfollow")
-    public Result unfollowUser(@ApiParam(name = "被关注用户id", value = "id") @RequestParam(name = "id") Long id) {
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser") {
-            return Result.fail().code(ECode.ERROR).message(BaseMessageConf.SYS_LOGIN_ERROR);
-        }
-        UserVO user = (UserVO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        LambdaQueryWrapper<Follow> followLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        followLambdaQueryWrapper.eq(Follow::getFansId, user.getId());
-        List<Follow> followList = followService.list(followLambdaQueryWrapper);
-        if (followList != null) {
-            for (Follow follow : followList) {
-                if (Objects.equals(follow.getUserId(), id)) {
-                    LambdaQueryWrapper<Follow> wrapper = new LambdaQueryWrapper<>();
-                    wrapper.eq(Follow::getUserId, follow.getUserId()).eq(Follow::getFansId, user.getId());
-                    followService.remove(wrapper);
-                    return Result.ok().code(ECode.SUCCESS).message(BaseMessageConf.UNFOLLOW_SUCCESS);
-                }
-            }
-        }
-        return Result.fail().code(ECode.ERROR).message(BaseMessageConf.HAS_NOT_FOLLOWED);
     }
 }
