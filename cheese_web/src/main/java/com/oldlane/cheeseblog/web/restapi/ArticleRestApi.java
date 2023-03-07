@@ -45,4 +45,11 @@ public class ArticleRestApi {
         }
         return articleService.parseArticleByAid(aid);
     }
+
+    @ApiOperation(value = "根据文章id获取相关文章", notes = "根据文章id获取相关文章")
+    @GetMapping("getAbout")
+    @Transactional
+    public Result getAboutById(@ApiParam(name = "id", value = "文章id") @RequestParam Long id) {
+        return articleService.getAboutById(id);
+    }
 }

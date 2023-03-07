@@ -17,4 +17,6 @@ public interface UsersService extends IService<Users> {
     Result sendCode(String email);
 
     Result logout(String token);
+
+    Result getAuthorTop10();
 }

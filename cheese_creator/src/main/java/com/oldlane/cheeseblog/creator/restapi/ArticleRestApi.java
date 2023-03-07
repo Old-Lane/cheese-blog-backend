@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,6 +75,10 @@ public class ArticleRestApi {
                 categoryService.save(c);
                 article.setCategoryId(c.getId());
             }
+        }
+
+        if (!EArticleStatus.DRAFT.equals(articleVO.getStatus())) {
+            article.setPublishTime(new Date());
         }
 
         article.setAuthor(user.getNickname());

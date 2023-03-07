@@ -18,4 +18,6 @@ public interface ArticleService extends IService<Article> {
     Result listAll(String sort, Long uid, Integer page, Integer pageSize);
 
     Result parseArticleByAid(Long aid);
+
+    Result getAboutById(Long id);
 }

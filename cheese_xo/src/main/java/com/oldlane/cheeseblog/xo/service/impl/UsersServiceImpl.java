@@ -27,6 +27,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -131,6 +132,14 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users>
         stringRedisTemplate.delete(LOGIN_USER_TOKEN + token);
         UserHolder.removeUser();
         return Result.ok().message("退出成功");
+    }
+
+    @Override
+    public Result getAuthorTop10() {
+        LambdaQueryWrapper<Users> wrapper = new LambdaQueryWrapper<>();
+        wrapper.last("limit 10");
+        List<Users> usersList = this.list(wrapper);
+        return Result.ok(usersList);
     }
 
     public Users register(String email) {

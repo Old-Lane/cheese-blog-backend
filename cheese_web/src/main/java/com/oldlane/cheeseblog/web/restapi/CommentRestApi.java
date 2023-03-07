@@ -104,6 +104,7 @@ public class CommentRestApi {
             }
             map.put(comment.getId(), comment);
         }
+
         // 再次遍历，子评论放入到父评论的child中
         for (Comment comment : commentPageRecords) {
 
@@ -121,4 +122,5 @@ public class CommentRestApi {
 
         return Result.ok(commentPage);
     }
+
 }

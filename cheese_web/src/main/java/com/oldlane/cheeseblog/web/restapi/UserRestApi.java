@@ -111,4 +111,26 @@ public class UserRestApi {
         }
         return Result.ok(result);
     }
+
+    @ApiOperation(value = "获取个人信息详细")
+    @GetMapping("detail")
+    public Result getUserInfoDetail() {
+        UserVO userVO = (UserVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = usersService.getById(userVO.getId());
+        return Result.ok(user);
+    }
+
+    @ApiOperation(value = "修改个人信息详细")
+    @GetMapping("modify")
+    public Result modify(@RequestBody Users user) {
+        usersService.updateById(user);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "获取前十作者信息")
+    @GetMapping("top10")
+    public Result getAuthorTop10() {
+        return usersService.getAuthorTop10();
+    }
+
 }

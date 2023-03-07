@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oldlane.cheeseblog.xo.mapper.ChatMessageMapper">
+
+    <resultMap id="BaseResultMap" type="com.oldlane.cheeseblog.commons.entity.ChatMessage">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="linkId" column="link_id" jdbcType="BIGINT"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="sendTime" column="send_time" jdbcType="TIMESTAMP"/>
+            <result property="type" column="type" jdbcType="TINYINT"/>
+            <result property="isLatest" column="is_latest" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,link_id,content,
+        send_time,type,is_latest
+    </sql>
+</mapper>

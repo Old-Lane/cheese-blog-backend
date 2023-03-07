@@ -206,6 +206,26 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         return Result.ok().code(ECode.SUCCESS);
     }
 
+    @Override
+    public Result getAboutById(Long id) {
+        LambdaQueryWrapper<ArticleTag> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ArticleTag::getArticleId, id);
+        List<ArticleTag> articleTagList = articleTagService.list(queryWrapper);
+        List<Article> articles = new ArrayList<>();
+        articleTagList.forEach(item -> {
+            LambdaQueryWrapper<ArticleTag> queryWrapper1 = new LambdaQueryWrapper<>();
+            queryWrapper1.eq(ArticleTag::getTagId, item.getTagId());
+            List<ArticleTag> articleTags = articleTagService.list(queryWrapper1);
+            articleTags.forEach(item2 -> {
+                if (!Objects.equals(item2.getArticleId(), id)) {
+                    Article article = this.getById(item2.getArticleId());
+                    articles.add(article);
+                }
+            });
+        });
+        return Result.ok(articles);
+    }
+
     /**
      * 获取各种文章类型的数量
      * @return
